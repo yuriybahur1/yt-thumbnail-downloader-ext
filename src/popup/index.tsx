@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { FC, useState, useEffect, StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { displayName as extName } from '../../package.json';
 import { getThumbnailUrl } from '../utils/getThumbnailUrl';
 import { getYouTubeVideoId } from '../utils/getYouTubeVideoId';
@@ -8,12 +8,12 @@ import type { Msg, Resp } from '../types';
 import 'modern-normalize/modern-normalize.css';
 import './index.css';
 
-const Popup: React.FC = () => {
-  const [videoId, setVideoId] = React.useState<string | null>(null);
+const Popup: FC = () => {
+  const [videoId, setVideoId] = useState<string | null>(null);
 
-  const [msg, setMsg] = React.useState<{ text: string; error: boolean } | null>(null);
+  const [msg, setMsg] = useState<{ text: string; error: boolean } | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const init = async () => {
       try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -81,9 +81,9 @@ const Popup: React.FC = () => {
 const appEl = document.querySelector('#app');
 
 if (appEl) {
-  ReactDOM.createRoot(appEl).render(
-    <React.StrictMode>
+  createRoot(appEl).render(
+    <StrictMode>
       <Popup />
-    </React.StrictMode>,
+    </StrictMode>,
   );
 }
